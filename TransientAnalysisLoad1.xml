@@ -1,0 +1,52 @@
+<!--
+Goal is to demonstrate how to implement an ACT load for certain simulation types only. E.g. Implement a load that is valid for static structural / Modal / Thermal analyses only
+
+Main contents:
+    1. One XML file with a toolbar made of two buttons
+      a. A Input values for Transient time points in excel file and analysis index
+      b. A Transient Thermal Load creation for thermal Analysis only
+    2. One Python file with the code that allows to limit the load to the specific scenario
+
+Usage instructions:
+    1. Copy this XML and the folder (Template-TransientAnalysisLoad1) to %appdata%\Ansys\v212\ACT\extensions
+    2. Open WB, load the extension and create different analysis types
+    3. Open Mechanical and check the extension
+-->
+
+<extension version="4" name="TransientAnalysisLoad1">
+
+  <guid shortid="TransientAnalysisLoad1">9102A3A9-C185-4791-84D9-031E7983DC5A</guid>
+
+  <script src="transient_analysis_load1.py" />
+
+  <interface context="Mechanical">
+
+    <images>images</images>
+
+    <!-- Create a toolbar and add three toolbar buttons. -->
+    <toolbar name="Transient Analysis Load" caption="Transient Analysis Load">
+
+      <!-- 2nd button -->
+      <entry name="Input Values" icon="Inputs">
+        <callbacks>
+          <onclick>createInputLoad</onclick>
+        </callbacks>
+      </entry>
+      <!-- 1st button  -->
+      <entry name="Transient Thermal Load" icon="TransientLoad">
+        <callbacks>
+          <!-- This will add the ACT load object to the selected analysis in the tree. -->
+          <onclick>createTransientLoad</onclick>
+        </callbacks>
+      </entry>	  
+      
+
+    </toolbar>
+  </interface>
+
+  <simdata context="Mechanical">
+
+
+  </simdata>
+
+</extension>
