@@ -1,0 +1,122 @@
+#Transient time point scaling based on the input excel sheet provided.
+from tkinter import filedialog
+from PIL import ImageTk,Image
+import os
+from tkinter import *
+from tkinter import ttk
+import fileinput
+import pandas as pd
+from tkinter.filedialog import  askopenfile
+import csv
+import tkinter.messagebox
+from Tbuk_HTC_Pr_scaling_V2 import Temploads
+from Tbuk_HTC_Pr_scaling_V2 import Pressureloads
+from Tbuk_combination_evaluate_v1 import Temperatureloads
+
+#import xlrd
+import shutil
+
+root = Tk()
+root.geometry("1600x1600+20+40")
+root['bg']='AntiqueWhite2'
+root['bd']= 3
+# image resizing
+
+
+root.title('Transient timepoint scaling v1.0 ')
+Label(root,text = "Transient timepoint scaling ", bg="DarkCyan",height ="2",\
+      width = "800", fg ="white",
+      font = ("Calibri",40)).pack()
+Label(root,text = "Note: This tool is specific to project requirement, read the requirement\
+  of this tool for process and input data. Files with binary excel format not supported",
+      height ="3",
+      width = "400",
+      font = ("Calibri",12)).pack()
+print("entering post processing module")
+
+textBox=Text(root, height=6, width=90)
+textBox.pack(side=TOP)
+Fact = """Requirements :
+> Take care of units, consistent to the input files,no unit conversion is evaluated.
+> Scale Factor excel files for Temperature and HTC's for transient time points.
+> Scale Factor excel files for Pressure loads for transient time points.
+> Steady state transient time point excel to be created, with file name "Stage14_peak.xlsx"""
+
+textBox.insert(END, Fact)
+textBox.tag_configure("right", justify='center')
+
+
+print("getting path from string")
+# Create label
+l = Label(root, text = "<<--- Select 3 excel files for Temperature & HTC scaling")
+l.config(font =("Courier", 12))
+l.place(x=380,y=350)
+s= Label(root, text = " <<--- Select 2 excel files for Pressure scaling")
+s.config(font =("Courier", 12))
+s.place(x=380,y=450)
+p= Label(root, text = " Select excel file for Temperature combination --->>")
+p.config(font =("Courier", 12))
+p.place(x=450,y=650)
+#print(fpath)
+
+#def retrieve_input():
+#    global inputValue
+#    inputValue=textBox.get("1.0","end-1c")
+#    print(inputValue)
+#textBox=Text(root, height=2, width=10)
+#textBox.pack()
+#buttonCommit=Button(root, height=1, width=10, text="Commit",
+#                    command=lambda: retrieve_input())
+#command=lambda: retrieve_input() >>> just means do this when i press the button
+#buttonCommit.pack()
+
+def getFolderPath():
+    global folder
+    folder = filedialog.askdirectory()
+    print(folder)
+
+def plot1():
+    group1= Temploads()
+    print("excecution of Tbulk and HTC..... completed")
+    tkinter.messagebox.showinfo("Complete", "execution of Tbulk and HTC..... completed,\n Output file: Result_Tbulk_HTC_scaled.xlsx")
+
+def plot2():
+    group1=Pressureloads()
+    print("excecution of Pressure Scaling..... completed")
+    tkinter.messagebox.showinfo("Complete", "execution of Pressure Scaling..... completed,\n Output file: Result_Pressure_scaled.xlsx")
+
+def close():
+    root.destroy()
+def execute():
+    group3=Temperatureloads()
+    print("extraction of Tbulk combination.. completed")
+    tkinter.messagebox.showinfo("Complete", "extraction  of Tbulk for various combination ... completed,\n Output file: 'Result_combination.xlsx")
+
+print("entering button controls")
+#---------------------------------
+
+button1 = Button(root,text = " Tbulk & HTC scaling ", height ="2", width = "25",\
+                 font = ("Calibri",13),bg="teal",fg ="white", command = plot1)
+button1.place(x = 60, y = 340)
+
+#---------------------------------
+button2 = Button(root,text = " Pressure Scaling ", height ="2", width = "25",\
+                 font = ("Calibri",13),bg="teal",fg ="white", command = plot2)
+button2.place(x = 60, y = 440)
+#---------------------------------
+#---------------------------------
+#---------------------------------
+#---------------------------------
+button3 = Button(root,text = "Tbulk Combination Evaluate ",height ="2", width = "25",\
+                 font = ("Calibri",13),bg="teal",fg ="white", command =execute)
+button3.place(x = 1050, y = 640)
+#--------------------------------
+#---------------------------------
+button6 = Button(root,text = " Close ",height ="2", width = "25",\
+                 font = ("Calibri",13),bg="LightBlue4",fg ="white", command = close)
+button6.place(x = 60, y = 640)
+#--------------------------------
+
+print("completed button controls")
+root.state("zoomed")
+root.mainloop()
