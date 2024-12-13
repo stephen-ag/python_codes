@@ -38,7 +38,22 @@ Usage instructions:
           <!-- This will add the ACT load object to the selected analysis in the tree. -->
           <onclick>createTransientLoad</onclick>
         </callbacks>
+      </entry>	 
       </entry>	  
+      <!-- 3rd button  -->
+      <entry name="Structural Pressure Load" icon="StructuralPressure">
+        <callbacks>
+          <!-- This will add the ACT load object to the selected analysis in the tree. -->
+          <onclick>createStructuralPressure</onclick>
+        </callbacks>
+      </entry>	
+      <!-- 4th button  -->
+      <entry name="Structural Force" icon="StructuralForce">
+        <callbacks>
+          <!-- This will add the ACT load object to the selected analysis in the tree. -->
+          <onclick>createStructuralForce</onclick>
+        </callbacks>
+      </entry>        
       
 
     </toolbar>
